@@ -2,7 +2,7 @@ import sqlite3
 import re
 from collections import defaultdict
 
-DB_FILE = "figa.db"
+DB_FILE = "fingerprints.db"
 
 def clean_text(text):
     if not text:
@@ -50,11 +50,6 @@ for (new_title, new_artist), ids in groups.items():
     # Multiple IDs → merge required
     keep_id = min(ids)
     print(f"\nMerging group into {keep_id} ({new_title} - {new_artist})")
-    # Update master to cleaned name
-    c.execute(
-        "UPDATE songs SET title=?, artist=? WHERE id=?",
-        (new_title, new_artist, keep_id)
-    )
 
     # Move fingerprints from all duplicates
     for duplicate_id in ids:
